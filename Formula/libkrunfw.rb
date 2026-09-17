@@ -1,16 +1,9 @@
 class Libkrunfw < Formula
   desc "Dynamic library bundling a Linux kernel in a convenient storage format"
   homepage "https://github.com/containers/libkrunfw"
-  url "https://github.com/containers/libkrunfw/releases/download/v5.5.0/libkrunfw-prebuilt-aarch64.tgz"
-  sha256 "5bfae6efee63dbdf04a8fac2a69d772d9f900af2f54c4429b4acdfd6d86b9979"
+  url "https://github.com/containers/libkrunfw/releases/download/v5.6.1/libkrunfw-prebuilt-aarch64.tgz"
+  sha256 "a1b035fa178b38c14abf86879aa9b622073e45e49304ebd33f86e9e780a85ba0"
   license all_of: ["GPL-2.0-only", "LGPL-2.1-only"]
-
-  bottle do
-    root_url "https://github.com/libkrun/homebrew-krun/releases/download/libkrunfw-5.5.0"
-    rebuild 1
-    sha256 cellar: :any, arm64_tahoe:   "50847584b0f6c17eee6026b87bb975a3971f0ad329e036eac595b68f06b572e1"
-    sha256 cellar: :any, arm64_sequoia: "e6ff72e62eaa41b48ea6accdf3640b5da3a247d7679ad2a612aabe9a06fce4e5"
-  end
 
   # libkrun, our only consumer, only supports Hypervisor.framework on arm64
   depends_on arch: :arm64
