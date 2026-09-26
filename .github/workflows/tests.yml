@@ -6,12 +6,17 @@ on:
       - main
   pull_request:
 
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test-bot:
     strategy:
       matrix:
         os: [ macos-15, macos-26 ]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
     permissions:
       actions: read
       checks: read
@@ -36,6 +41,8 @@ jobs:
       - run: brew test-bot --only-setup
 
       - run: brew test-bot --only-tap-syntax
+        if: matrix.os == 'macos-15'
+      # Skipped on push to main: main commits arrive via brew pr-pull, which already ran CI on the PR
       - run: brew test-bot --only-formulae
         if: github.event_name == 'pull_request'
 
