@@ -7,8 +7,9 @@ class VirglrendererKrun < Formula
 
   bottle do
     root_url "https://github.com/libkrun/homebrew-krun/releases/download/virglrenderer-krun-0.10.4e"
-    sha256 cellar: :any, arm64_tahoe:   "a1409a29a8054da3bed9ec562a2c03113041d011d146ca2174562679fcfa2243"
-    sha256 cellar: :any, arm64_sequoia: "aa075ef1bbebbeda21663cae2e882cc15469a90a63083ab9612559b5a8fc45da"
+    rebuild 1
+    sha256 cellar: :any, arm64_tahoe:   "5a39d19998300f51d1536b58f57ebf50813dbe9b28bf97653641ab28995c5e76"
+    sha256 cellar: :any, arm64_sequoia: "8817df114b364d9615dfd1463084002dcb57932b84b3a3646ff34a9148f17941"
   end
 
   depends_on "meson" => :build
