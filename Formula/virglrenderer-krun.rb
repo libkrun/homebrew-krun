@@ -29,4 +29,27 @@ class VirglrendererKrun < Formula
     system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
   end
+
+  test do
+    (testpath/"test.c").write <<~C
+      #include <stdio.h>
+      #include <virglrenderer.h>
+      int main(void) {
+        struct virgl_renderer_callbacks cbs = {0};
+        cbs.version = 1;
+        // VIRGL_RENDERER_NO_VIRGL avoids need for EGL/GL context
+        int ret = virgl_renderer_init(NULL, VIRGL_RENDERER_NO_VIRGL, &cbs);
+        if (ret != 0) {
+          fprintf(stderr, "virgl_renderer_init failed: %d\\n", ret);
+          return 1;
+        }
+        virgl_renderer_poll();
+        virgl_renderer_cleanup(NULL);
+        printf("OK\\n");
+        return 0;
+      }
+    C
+    system ENV.cc, "test.c", "-o", "test", "-I#{include}/virgl", "-L#{lib}", "-lvirglrenderer"
+    assert_equal "OK", shell_output("./test").chomp
+  end
 end
